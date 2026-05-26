@@ -135,12 +135,12 @@ def get_entries(config_value):
 # Załaduj _shared jako bazę (klucz: (scope, path) -> value)
 merged = OrderedDict()
 for entry in get_entries(all_configs.get("_shared", [])):
-    key = (entry["scope"], entry["path"])
+    key = (entry.get("scope"), entry["path"])
     merged[key] = entry["value"]
 
 # Nadpisz/dodaj wartości z wybranej konfiguracji
 for entry in get_entries(all_configs[config_key]):
-    key = (entry["scope"], entry["path"])
+    key = (entry.get("scope"), entry["path"])
     merged[key] = entry["value"]
 
 # Grupuj wpisy o tej samej wartości i scope w jedno polecenie path in (...)

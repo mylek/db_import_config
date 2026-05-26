@@ -5,6 +5,29 @@
 # Generuje polecenia SQL UPDATE dla tabeli core_config_data
 # na podstawie wybranej konfiguracji z pliku config.json.
 #
+# Klucz "_shared" jest ładowany automatycznie jako baza — każda konfiguracja
+# może nadpisać jego wartości podając ten sam scope+path.
+#
+# Konfiguracje środowisk mogą używać sekcji "_web_urls" zamiast ręcznego
+# wypisywania wszystkich wpisów URL. Format:
+#
+#   "_web_urls": {
+#     "base": "https://example.com/",          <- bazowy URL (wymagany)
+#     "scopes": [                              <- mapowanie scope_id → sufiks
+#       { "ids": [0, 2], "suffix": "" },
+#       { "ids": [1],    "suffix": "en/" },
+#       { "ids": [3],    "suffix": "pl/" }
+#     ],
+#     "static_url": "https://cdn.example.com/static/",  <- opcjonalne nadpisanie
+#     "media_url":  "https://cdn.example.com/media/"    <- opcjonalne nadpisanie
+#   }
+#
+# Skrypt auto-generuje wpisy dla:
+#   web/unsecure/base_url, web/secure/base_url,
+#   web/unsecure/base_link_url, web/secure/base_link_url  (per scope)
+#   web/unsecure/base_static_url, web/secure/base_static_url  (scope null)
+#   web/unsecure/base_media_url,  web/secure/base_media_url   (scope null)
+#
 # Użycie:
 #   ./generate_sql.sh <config_key>
 #   ./generate_sql.sh nginx_htx
@@ -31,7 +54,8 @@ import json, sys
 with open('${CONFIG_FILE}') as f:
     cfg = json.load(f)
 for key in cfg:
-    print(f'  - {key}')
+    if not key.startswith('_'):
+        print(f'  - {key}')
 " >&2
     exit 1
 fi
@@ -63,21 +87,63 @@ if config_key not in all_configs:
     print("", file=sys.stderr)
     print("Dostępne konfiguracje:", file=sys.stderr)
     for key in all_configs:
-        print(f"  - {key}", file=sys.stderr)
+        if not key.startswith('_'):
+            print(f"  - {key}", file=sys.stderr)
     sys.exit(1)
 
-entries = all_configs[config_key]
+URL_PATHS = [
+    "web/unsecure/base_url",
+    "web/secure/base_url",
+    "web/unsecure/base_link_url",
+    "web/secure/base_link_url",
+]
+
+def expand_web_urls(cfg):
+    """Rozwiń sekcję _web_urls na listę wpisów scope+path+value."""
+    entries = []
+    base = cfg["base"]
+    for group in cfg.get("scopes", []):
+        url = base + group.get("suffix", "")
+        for scope_id in group["ids"]:
+            for path in URL_PATHS:
+                entries.append({"scope": scope_id, "path": path, "value": url})
+    static_url = cfg.get("static_url", base + "static/")
+    media_url  = cfg.get("media_url",  base + "media/")
+    for path in ["web/unsecure/base_static_url", "web/secure/base_static_url"]:
+        entries.append({"scope": None, "path": path, "value": static_url})
+    for path in ["web/unsecure/base_media_url", "web/secure/base_media_url"]:
+        entries.append({"scope": None, "path": path, "value": media_url})
+    return entries
+
+def get_entries(config_value):
+    """Zwróć listę wpisów z konfiguracji — obsługuje stary format (lista)
+    oraz nowy format (obiekt z _web_urls i/lub entries)."""
+    if isinstance(config_value, list):
+        return config_value
+    entries = []
+    if "_web_urls" in config_value:
+        entries += expand_web_urls(config_value["_web_urls"])
+    entries += config_value.get("entries", [])
+    return entries
+
+# Załaduj _shared jako bazę (klucz: (scope, path) -> value)
+merged = OrderedDict()
+for entry in get_entries(all_configs.get("_shared", [])):
+    key = (entry["scope"], entry["path"])
+    merged[key] = entry["value"]
+
+# Nadpisz/dodaj wartości z wybranej konfiguracji
+for entry in get_entries(all_configs[config_key]):
+    key = (entry["scope"], entry["path"])
+    merged[key] = entry["value"]
 
 # Grupuj wpisy o tej samej wartości i scope w jedno polecenie path in (...)
 groups = OrderedDict()
-for entry in entries:
-    scope = entry["scope"]   # liczba lub null
-    path  = entry["path"]
-    value = entry["value"]
-    key = (scope, value)
-    if key not in groups:
-        groups[key] = []
-    groups[key].append(path)
+for (scope, path), value in merged.items():
+    group_key = (scope, value)
+    if group_key not in groups:
+        groups[group_key] = []
+    groups[group_key].append(path)
 
 for (scope, value), paths in groups.items():
     escaped   = value.replace("'", "''")

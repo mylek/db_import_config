@@ -1,116 +1,50 @@
 {
-  "nginx_htx": [
-    { "scope": 0, "path": "web/unsecure/base_url",      "value": "https://nginx.helikon-tex.orb.local/" },
-    { "scope": 0, "path": "web/secure/base_url",        "value": "https://nginx.helikon-tex.orb.local/" },
-    { "scope": 0, "path": "web/unsecure/base_link_url", "value": "https://nginx.helikon-tex.orb.local/" },
-    { "scope": 0, "path": "web/secure/base_link_url",   "value": "https://nginx.helikon-tex.orb.local/" },
-
-    { "scope": 2, "path": "web/unsecure/base_url",      "value": "https://nginx.helikon-tex.orb.local/" },
-    { "scope": 2, "path": "web/secure/base_url",        "value": "https://nginx.helikon-tex.orb.local/" },
-    { "scope": 2, "path": "web/unsecure/base_link_url", "value": "https://nginx.helikon-tex.orb.local/" },
-    { "scope": 2, "path": "web/secure/base_link_url",   "value": "https://nginx.helikon-tex.orb.local/" },
-
-    { "scope": 1, "path": "web/unsecure/base_url",      "value": "https://nginx.helikon-tex.orb.local/en/" },
-    { "scope": 1, "path": "web/secure/base_url",        "value": "https://nginx.helikon-tex.orb.local/en/" },
-    { "scope": 1, "path": "web/unsecure/base_link_url", "value": "https://nginx.helikon-tex.orb.local/en/" },
-    { "scope": 1, "path": "web/secure/base_link_url",   "value": "https://nginx.helikon-tex.orb.local/en/" },
-
-    { "scope": 3, "path": "web/unsecure/base_url",      "value": "https://nginx.helikon-tex.orb.local/pl/" },
-    { "scope": 3, "path": "web/secure/base_url",        "value": "https://nginx.helikon-tex.orb.local/pl/" },
-    { "scope": 3, "path": "web/unsecure/base_link_url", "value": "https://nginx.helikon-tex.orb.local/pl/" },
-    { "scope": 3, "path": "web/secure/base_link_url",   "value": "https://nginx.helikon-tex.orb.local/pl/" },
-
-    { "scope": null, "path": "web/unsecure/base_static_url", "value": "https://nginx.helikon-tex.orb.local/static/" },
-    { "scope": null, "path": "web/secure/base_static_url",   "value": "https://nginx.helikon-tex.orb.local/static/" },
-    { "scope": null, "path": "web/unsecure/base_media_url",  "value": "https://nginx.helikon-tex.orb.local/media/" },
-    { "scope": null, "path": "web/secure/base_media_url",    "value": "https://nginx.helikon-tex.orb.local/media/" },
-
-    { "scope": null, "path": "catalog/search/elasticsearch7_server_hostname", "value": "elasticsearch" },
-
+  "_shared": [
     { "scope": null, "path": "erpconnector/general/api_url", "value": "http://10.10.48.25:44380" },
-
+    { "scope": null, "path": "pimconnector/general/api_key", "value": "de0b31477281cd177e5a6a55a3c18c4a" },
     { "scope": null, "path": "pimconnector/general/api_url", "value": "https://31.179.196.76/pimcore-graphql-webservices" },
-    { "scope": null, "path": "pimconnector/general/api_key", "value": "de0b31477281cd177e5a6a55a3c18c4a" },
-
+    { "scope": null, "path": "smtp/configuration_option/host",           "value": "mailhog" },
+    { "scope": null, "path": "smtp/configuration_option/authentication", "value": "smtp" },
+    { "scope": null, "path": "smtp/configuration_option/port",           "value": "1025" },
+    { "scope": null, "path": "catalog/search/elasticsearch7_server_hostname", "value": "elasticsearch" },
     { "scope": null, "path": "recaptcha_frontend/type_recaptcha_v3/public_key",  "value": "d0:3:fh6IdRUbiaWA+7lxmg8JecfEndtJlDfA37xFlCvmL+Fmqwa1+xaalU3be7sKqokO+L/Bsnurlm7OhmAutAfRO7aqWIA=" },
-    { "scope": null, "path": "recaptcha_frontend/type_recaptcha_v3/private_key", "value": "0:3:GGCMppOoE61s7rv5rf+9Mwgap8Tm7cHT0jo+ruNKkgp3VsVJSk2hZD+BauwRMYNFW5pbxOQgv8Qk0f4rjrGRmahEZCI=" },
-
-    { "scope": null, "path": "smtp/configuration_option/host",           "value": "mailhog" },
-    { "scope": null, "path": "smtp/configuration_option/authentication", "value": "smtp" },
-    { "scope": null, "path": "smtp/configuration_option/port",           "value": "1025" }
+    { "scope": null, "path": "recaptcha_frontend/type_recaptcha_v3/private_key", "value": "0:3:GGCMppOoE61s7rv5rf+9Mwgap8Tm7cHT0jo+ruNKkgp3VsVJSk2hZD+BauwRMYNFW5pbxOQgv8Qk0f4rjrGRmahEZCI=" }
   ],
 
-  "local_htx": [
-    { "scope": 0, "path": "web/unsecure/base_url",      "value": "https://app.helikon-tex.test/" },
-    { "scope": 0, "path": "web/secure/base_url",        "value": "https://app.helikon-tex.test/" },
-    { "scope": 0, "path": "web/unsecure/base_link_url", "value": "https://app.helikon-tex.test/" },
-    { "scope": 0, "path": "web/secure/base_link_url",   "value": "https://app.helikon-tex.test/" },
+  "nginx_htx": {
+    "_web_urls": {
+      "base": "https://nginx.helikon-tex.orb.local/",
+      "scopes": [
+        { "ids": [0, 2], "suffix": "" },
+        { "ids": [1],    "suffix": "en/" },
+        { "ids": [3],    "suffix": "pl/" }
+      ]
+    }
+  },
 
-    { "scope": 2, "path": "web/unsecure/base_url",      "value": "https://app.helikon-tex.test/" },
-    { "scope": 2, "path": "web/secure/base_url",        "value": "https://app.helikon-tex.test/" },
-    { "scope": 2, "path": "web/unsecure/base_link_url", "value": "https://app.helikon-tex.test/" },
-    { "scope": 2, "path": "web/secure/base_link_url",   "value": "https://app.helikon-tex.test/" },
+  "local_htx": {
+    "_web_urls": {
+      "base": "https://app.helikon-tex.test/",
+      "scopes": [
+        { "ids": [0, 1, 2], "suffix": "" },
+        { "ids": [3],       "suffix": "pl/" }
+      ]
+    },
+    "entries": [
+      { "scope": null, "path": "web/unsecure/base_media_url", "value": "https://app.helikon-tex.test/media/" },
+      { "scope": null, "path": "web/secure/base_media_url",   "value": "https://helikon-tex.test/media/" },
+      { "scope": null, "path": "catalog/search/elasticsearch7_server_hostname", "value": "elastic3" }
+    ]
+  },
 
-    { "scope": 1, "path": "web/unsecure/base_url",      "value": "https://helikon-tex.test/en/" },
-    { "scope": 1, "path": "web/secure/base_url",        "value": "https://helikon-tex.test/en/" },
-    { "scope": 1, "path": "web/unsecure/base_link_url", "value": "https://helikon-tex.test/en/" },
-    { "scope": 1, "path": "web/secure/base_link_url",   "value": "https://helikon-tex.test/en/" },
-
-    { "scope": 3, "path": "web/unsecure/base_url",      "value": "https://helikon-tex.test/pl/" },
-    { "scope": 3, "path": "web/secure/base_url",        "value": "https://helikon-tex.test/pl/" },
-    { "scope": 3, "path": "web/unsecure/base_link_url", "value": "https://helikon-tex.test/pl/" },
-    { "scope": 3, "path": "web/secure/base_link_url",   "value": "https://helikon-tex.test/pl/" },
-
-    { "scope": null, "path": "web/unsecure/base_static_url", "value": "https://app.helikon-tex.test/static/" },
-    { "scope": null, "path": "web/secure/base_static_url",   "value": "https://app.helikon-tex.test/static/" },
-    { "scope": null, "path": "web/unsecure/base_media_url",  "value": "https://helikon-tex.test/media/" },
-    { "scope": null, "path": "web/secure/base_media_url",    "value": "https://helikon-tex.test/media/" },
-
-    { "scope": null, "path": "catalog/search/elasticsearch7_server_hostname", "value": "elastic3" },
-
-    { "scope": null, "path": "erpconnector/general/api_url", "value": "http://10.10.48.25:44380" },
-
-    { "scope": null, "path": "pimconnector/general/api_url", "value": "https://10.100.48.50/pimcore-graphql-webservices" },
-    { "scope": null, "path": "pimconnector/general/api_key", "value": "de0b31477281cd177e5a6a55a3c18c4a" },
-
-    { "scope": null, "path": "smtp/configuration_option/host",           "value": "mailhog" },
-    { "scope": null, "path": "smtp/configuration_option/authentication", "value": "smtp" },
-    { "scope": null, "path": "smtp/configuration_option/port",           "value": "1025" }
-  ],
-
-  "nginx_da": [
-    { "scope": 0, "path": "web/unsecure/base_url",      "value": "https://nginx.directaction.orb.local/" },
-    { "scope": 0, "path": "web/secure/base_url",        "value": "https://nginx.directaction.orb.local/" },
-    { "scope": 0, "path": "web/unsecure/base_link_url", "value": "https://nginx.directaction.orb.local/" },
-    { "scope": 0, "path": "web/secure/base_link_url",   "value": "https://nginx.directaction.orb.local/" },
-
-    { "scope": 2, "path": "web/unsecure/base_url",      "value": "https://nginx.directaction.orb.local/" },
-    { "scope": 2, "path": "web/secure/base_url",        "value": "https://nginx.directaction.orb.local/" },
-    { "scope": 2, "path": "web/unsecure/base_link_url", "value": "https://nginx.directaction.orb.local/" },
-    { "scope": 2, "path": "web/secure/base_link_url",   "value": "https://nginx.directaction.orb.local/" },
-
-    { "scope": 1, "path": "web/unsecure/base_url",      "value": "https://nginx.directaction.orb.local/en/" },
-    { "scope": 1, "path": "web/secure/base_url",        "value": "https://nginx.directaction.orb.local/en/" },
-    { "scope": 1, "path": "web/unsecure/base_link_url", "value": "https://nginx.directaction.orb.local/en/" },
-    { "scope": 1, "path": "web/secure/base_link_url",   "value": "https://nginx.directaction.orb.local/en/" },
-
-    { "scope": 3, "path": "web/unsecure/base_url",      "value": "https://nginx.directaction.orb.local/pl/" },
-    { "scope": 3, "path": "web/secure/base_url",        "value": "https://nginx.directaction.orb.local/pl/" },
-    { "scope": 3, "path": "web/unsecure/base_link_url", "value": "https://nginx.directaction.orb.local/pl/" },
-    { "scope": 3, "path": "web/secure/base_link_url",   "value": "https://nginx.directaction.orb.local/pl/" },
-
-    { "scope": null, "path": "web/unsecure/base_static_url", "value": "https://nginx.directaction.orb.local/static/" },
-    { "scope": null, "path": "web/secure/base_static_url",   "value": "https://nginx.directaction.orb.local/static/" },
-    { "scope": null, "path": "web/unsecure/base_media_url",  "value": "https://nginx.directaction.orb.local/media/" },
-    { "scope": null, "path": "web/secure/base_media_url",    "value": "https://nginx.directaction.orb.local/media/" },
-
-    { "scope": null, "path": "erpconnector/general/api_url", "value": "http://10.10.48.25:44380" },
-
-    { "scope": null, "path": "pimconnector/general/api_url", "value": "https://10.100.48.50/pimcore-graphql-webservices" },
-    { "scope": null, "path": "pimconnector/general/api_key", "value": "de0b31477281cd177e5a6a55a3c18c4a" },
-
-    { "scope": null, "path": "smtp/configuration_option/host",           "value": "mailhog" },
-    { "scope": null, "path": "smtp/configuration_option/authentication", "value": "smtp" },
-    { "scope": null, "path": "smtp/configuration_option/port",           "value": "1025" }
-  ]
+  "nginx_da": {
+    "_web_urls": {
+      "base": "https://nginx.directaction.orb.local/",
+      "scopes": [
+        { "ids": [0, 2], "suffix": "" },
+        { "ids": [1],    "suffix": "en/" },
+        { "ids": [3],    "suffix": "pl/" }
+      ]
+    }
+  }
 }

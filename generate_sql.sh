@@ -6,7 +6,7 @@
 # na podstawie wybranej konfiguracji z pliku config.json.
 #
 # Klucz "_shared" jest ładowany automatycznie jako baza — każda konfiguracja
-# może nadpisać jego wartości podając ten sam scope+path.
+# może nadpisać jego wartości podając ten sam path (i opcjonalnie scope_id).
 #
 # Konfiguracje środowisk mogą używać sekcji "_web_urls" zamiast ręcznego
 # wypisywania wszystkich wpisów URL. Format:
@@ -14,7 +14,7 @@
 #   "_web_urls": {
 #     "base": "https://example.com/",          <- bazowy URL (wymagany)
 #     "scopes": [                              <- mapowanie scope_id → sufiks
-#       { "ids": [0, 2], "suffix": "" },
+#       { "ids": [0, 2], "suffix": "" },       <- domyślne jeśli pominięte
 #       { "ids": [1],    "suffix": "en/" },
 #       { "ids": [3],    "suffix": "pl/" }
 #     ],
@@ -24,9 +24,12 @@
 #
 # Skrypt auto-generuje wpisy dla:
 #   web/unsecure/base_url, web/secure/base_url,
-#   web/unsecure/base_link_url, web/secure/base_link_url  (per scope)
-#   web/unsecure/base_static_url, web/secure/base_static_url  (scope null)
-#   web/unsecure/base_media_url,  web/secure/base_media_url   (scope null)
+#   web/unsecure/base_link_url, web/secure/base_link_url  (filtrowane po scope_id)
+#   web/unsecure/base_static_url, web/secure/base_static_url  (bez filtra scope_id)
+#   web/unsecure/base_media_url,  web/secure/base_media_url   (bez filtra scope_id)
+#
+# Wpisy w "_shared" i "entries" mogą pominąć pole "scope" — brak pola oznacza
+# UPDATE bez filtrowania po scope_id (odpowiednik scope = 'default' w Magento).
 #
 # Użycie:
 #   ./generate_sql.sh <config_key>

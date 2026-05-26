@@ -2,9 +2,9 @@
 # =============================================================================
 # execute_sql.sh
 #
-# Wykonuje plik update.sql na bazie danych przez warden db connect.
+# Wykonuje plik update.sql na bazie danych przez warden env exec.
 # Katalog projektu warden oraz nazwa bazy są odczytywane z config.json
-# na podstawie klucza środowiska.
+# na podstawie klucza środowiska (_warden_dir wymagany, _db opcjonalny).
 #
 # Użycie:
 #   ./execute_sql.sh <config_key> [database]

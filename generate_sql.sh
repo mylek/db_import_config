@@ -162,11 +162,15 @@ for (scope, value), paths in groups.items():
 PYEOF
 )
 
+SQL_FILE="${SCRIPT_DIR}/update.sql"
+
 echo "$SQL_OUTPUT"
+echo "$SQL_OUTPUT" > "$SQL_FILE"
+echo "" >&2
+echo "✓ Zapisano do: ${SQL_FILE}" >&2
 
 if [[ -n "$CLIPBOARD_CMD" ]]; then
     echo "$SQL_OUTPUT" | eval "$CLIPBOARD_CMD"
-    echo "" >&2
     echo "✓ Skopiowano do schowka." >&2
 else
     echo "" >&2

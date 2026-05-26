@@ -12,10 +12,12 @@
   ],
 
   "nginx_htx": {
-    "_web_urls": { "base": "https://nginx.helikon-tex.orb.local/" }
+    "_warden_dir": "/Users/k.gwozdziowski/www/helikon-tex",
+    "_web_urls": { "base": "https://aaaanginx.helikon-tex.orb.local/" }
   },
 
   "local_htx": {
+    "_warden_dir": "/Users/k.gwozdziowski/www/helikon-tex",
     "_web_urls": { "base": "https://app.helikon-tex.test/" },
     "entries": [
       { "scope": null, "path": "catalog/search/elasticsearch7_server_hostname", "value": "elastic3" }
@@ -23,6 +25,7 @@
   },
 
   "nginx_da": {
+    "_warden_dir": "/Users/k.gwozdziowski/www/direct-action",
     "_web_urls": { "base": "https://nginx.directaction.orb.local/" }
   }
 }

@@ -98,11 +98,17 @@ URL_PATHS = [
     "web/secure/base_link_url",
 ]
 
+DEFAULT_SCOPES = [
+    { "ids": [0, 2], "suffix": "" },
+    { "ids": [1],    "suffix": "en/" },
+    { "ids": [3],    "suffix": "pl/" },
+]
+
 def expand_web_urls(cfg):
     """Rozwiń sekcję _web_urls na listę wpisów scope+path+value."""
     entries = []
     base = cfg["base"]
-    for group in cfg.get("scopes", []):
+    for group in cfg.get("scopes", DEFAULT_SCOPES):
         url = base + group.get("suffix", "")
         for scope_id in group["ids"]:
             for path in URL_PATHS:

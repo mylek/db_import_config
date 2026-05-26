@@ -12,39 +12,17 @@
   ],
 
   "nginx_htx": {
-    "_web_urls": {
-      "base": "https://nginx.helikon-tex.orb.local/",
-      "scopes": [
-        { "ids": [0, 2], "suffix": "" },
-        { "ids": [1],    "suffix": "en/" },
-        { "ids": [3],    "suffix": "pl/" }
-      ]
-    }
+    "_web_urls": { "base": "https://nginx.helikon-tex.orb.local/" }
   },
 
   "local_htx": {
-    "_web_urls": {
-      "base": "https://app.helikon-tex.test/",
-      "scopes": [
-        { "ids": [0, 1, 2], "suffix": "" },
-        { "ids": [3],       "suffix": "pl/" }
-      ]
-    },
+    "_web_urls": { "base": "https://app.helikon-tex.test/" },
     "entries": [
-      { "scope": null, "path": "web/unsecure/base_media_url", "value": "https://app.helikon-tex.test/media/" },
-      { "scope": null, "path": "web/secure/base_media_url",   "value": "https://helikon-tex.test/media/" },
       { "scope": null, "path": "catalog/search/elasticsearch7_server_hostname", "value": "elastic3" }
     ]
   },
 
   "nginx_da": {
-    "_web_urls": {
-      "base": "https://nginx.directaction.orb.local/",
-      "scopes": [
-        { "ids": [0, 2], "suffix": "" },
-        { "ids": [1],    "suffix": "en/" },
-        { "ids": [3],    "suffix": "pl/" }
-      ]
-    }
+    "_web_urls": { "base": "https://nginx.directaction.orb.local/" }
   }
 }

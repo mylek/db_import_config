@@ -1,19 +1,20 @@
 {
   "_shared": [
-    { "path": "erpconnector/general/api_url", "value": "http://10.10.48.25:44380" },
+    { "path": "erpconnector/general/api_url", "value": "http://10.100.48.25:44380" },
     { "path": "pimconnector/general/api_key", "value": "de0b31477281cd177e5a6a55a3c18c4a" },
-    { "path": "pimconnector/general/api_url", "value": "https://31.179.196.76/pimcore-graphql-webservices" },
+    { "path": "pimconnector/general/api_url", "value": "https://10.100.48.50/pimcore-graphql-webservices" },
     { "path": "smtp/configuration_option/host",           "value": "mailhog" },
     { "path": "smtp/configuration_option/authentication", "value": "smtp" },
     { "path": "smtp/configuration_option/port",           "value": "1025" },
     { "path": "catalog/search/elasticsearch7_server_hostname", "value": "elasticsearch" },
+    { "path": "catalog/search/elasticsearch7_server_port",     "value": "9200" },
     { "path": "recaptcha_frontend/type_recaptcha_v3/public_key",  "value": "d0:3:fh6IdRUbiaWA+7lxmg8JecfEndtJlDfA37xFlCvmL+Fmqwa1+xaalU3be7sKqokO+L/Bsnurlm7OhmAutAfRO7aqWIA=" },
     { "path": "recaptcha_frontend/type_recaptcha_v3/private_key", "value": "0:3:GGCMppOoE61s7rv5rf+9Mwgap8Tm7cHT0jo+ruNKkgp3VsVJSk2hZD+BauwRMYNFW5pbxOQgv8Qk0f4rjrGRmahEZCI=" }
   ],
 
   "nginx_htx": {
     "_warden_dir": "/Users/k.gwozdziowski/www/helikon-tex",
-    "_web_urls": { "base": "https://aaaanginx.helikon-tex.orb.local/" }
+    "_web_urls": { "base": "https://nginx.helikon-tex.orb.local/" }
   },
 
   "local_htx": {
@@ -26,6 +27,10 @@
 
   "nginx_da": {
     "_warden_dir": "/Users/k.gwozdziowski/www/direct-action",
-    "_web_urls": { "base": "https://nginx.directaction.orb.local/" }
+    "_web_urls": { "base": "https://nginx.directaction.orb.local/" },
+    "entries": [
+      { "path": "erpconnector/general/api_url", "value": "http://10.100.48.25:44351" },
+      { "path": "pimconnector/general/api_key", "value": "d2da4d3f513238290b8890a1ec1999c7" }
+    ]
   }
 }

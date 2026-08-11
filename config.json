@@ -1,7 +1,10 @@
 {
   "_commands": [
+    "composer install",
     "bin/magento module:d Magento_TwoFactorAuth",
-    "bin/magento s:up && bin/magento s:st:d pl_PL -f",
+    "bin/magento s:up",
+    "bin/magento s:di:compile",
+    "bin/magento s:st:d pl_PL en_US -f",
     "bin/magento admin:user:create --admin-user='admin' --admin-password='Admin123$' --admin-email='admin@example.com' --admin-firstname='admin' --admin-lastname='admin'"
   ],
 
@@ -18,7 +21,7 @@
     { "path": "recaptcha_frontend/type_recaptcha_v3/private_key", "value": "0:3:GGCMppOoE61s7rv5rf+9Mwgap8Tm7cHT0jo+ruNKkgp3VsVJSk2hZD+BauwRMYNFW5pbxOQgv8Qk0f4rjrGRmahEZCI=" }
   ],
 
-  "nginx_htx": {
+  "htx": {
     "_warden_dir": "/Users/k.gwozdziowski/www/helikon-tex",
     "_web_urls": { "base": "https://nginx.helikon-tex.orb.local/" },
     "entries": [
@@ -27,20 +30,20 @@
     ]
   },
 
-  "local_htx": {
-    "_warden_dir": "/Users/k.gwozdziowski/www/helikon-tex",
-    "_web_urls": { "base": "https://app.helikon-tex.test/" },
-    "entries": [
-      { "path": "catalog/search/elasticsearch7_server_hostname", "value": "elastic3" }
-    ]
-  },
-
-  "nginx_da": {
+  "da": {
     "_warden_dir": "/Users/k.gwozdziowski/www/direct-action",
     "_web_urls": { "base": "https://nginx.directaction.orb.local/" },
     "entries": [
       { "path": "erpconnector/general/api_url", "value": "http://10.100.48.25:44351" },
       { "path": "pimconnector/general/api_key", "value": "d2da4d3f513238290b8890a1ec1999c7" }
+    ]
+  },
+
+  "local_htx": {
+    "_warden_dir": "/Users/k.gwozdziowski/www/helikon-tex",
+    "_web_urls": { "base": "https://app.helikon-tex.test/" },
+    "entries": [
+      { "path": "catalog/search/elasticsearch7_server_hostname", "value": "elastic3" }
     ]
   }
 }

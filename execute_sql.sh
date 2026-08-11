@@ -8,8 +8,8 @@
 #
 # Użycie:
 #   ./execute_sql.sh <config_key> [database]
-#   ./execute_sql.sh nginx_htx             <- baza z config lub domyślnie "magento"
-#   ./execute_sql.sh nginx_htx magento2    <- nadpisuje nazwę bazy
+#   ./execute_sql.sh htx             <- baza z config lub domyślnie "magento"
+#   ./execute_sql.sh htx magento2    <- nadpisuje nazwę bazy
 #
 # Wymagania: warden, działające środowisko warden (warden env up)
 # =============================================================================

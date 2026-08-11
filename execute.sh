@@ -16,27 +16,34 @@
 
 set -euo pipefail
 
+START_TIME=$(date +%s)
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="${SCRIPT_DIR}/config.json"
 SQL_FILE="${SCRIPT_DIR}/update.sql"
 
 if [[ $# -lt 1 ]]; then
-    echo "Użycie: $(basename "$0") <config_key> [database]" >&2
-    echo "" >&2
-    echo "Dostępne konfiguracje:" >&2
-    python3 -c "
-import json, sys
+    CONFIGS=$(python3 -c "
+import json
 with open('${CONFIG_FILE}') as f:
     cfg = json.load(f)
 for key in cfg:
     if not key.startswith('_'):
-        print(f'  - {key}')
-" >&2
-    exit 1
-fi
+        print(key)
+")
 
-CONFIG_KEY="$1"
-DATABASE_OVERRIDE="${2:-}"
+    echo "Wybierz konfigurację:" >&2
+    select CONFIG_KEY in $CONFIGS; do
+        [[ -n "$CONFIG_KEY" ]] && break
+        echo "Nieprawidłowy wybór, spróbuj ponownie." >&2
+    done
+
+    read -rp "Nazwa bazy danych [magento]: " DATABASE_OVERRIDE
+    DATABASE_OVERRIDE="${DATABASE_OVERRIDE:-}"
+else
+    CONFIG_KEY="$1"
+    DATABASE_OVERRIDE="${2:-}"
+fi
 
 echo "Generuję SQL dla: ${CONFIG_KEY}" >&2
 "${SCRIPT_DIR}/generate_sql.sh" "${CONFIG_KEY}"
@@ -76,6 +83,24 @@ PYEOF
 if [[ ! -d "$WARDEN_DIR" ]]; then
     echo "BŁĄD: Katalog '${WARDEN_DIR}' nie istnieje." >&2
     exit 1
+fi
+
+if [[ -n "$DATABASE_OVERRIDE" ]]; then
+    ENV_PHP="${WARDEN_DIR}/app/etc/env.php"
+    if [[ -f "$ENV_PHP" ]]; then
+        python3 - "$ENV_PHP" "$DATABASE_OVERRIDE" << 'PYEOF'
+import re, sys
+path, dbname = sys.argv[1], sys.argv[2]
+with open(path) as f:
+    content = f.read()
+updated = re.sub(r"('dbname'\s*=>\s*')[^']*(')", rf"\g<1>{dbname}\2", content)
+with open(path, 'w') as f:
+    f.write(updated)
+PYEOF
+        echo "Zaktualizowano dbname w app/etc/env.php → ${DATABASE_OVERRIDE}" >&2
+    else
+        echo "⚠ Nie znaleziono ${ENV_PHP}" >&2
+    fi
 fi
 
 echo "Środowisko : ${CONFIG_KEY}" >&2
@@ -120,5 +145,6 @@ if [[ -n "$COMMANDS" ]]; then
     done <<< "$COMMANDS"
 fi
 
+ELAPSED=$(( $(date +%s) - START_TIME ))
 echo "" >&2
-echo "✓ Gotowe." >&2
+echo "✓ Gotowe. Czas wykonania: $(( ELAPSED / 60 ))m $(( ELAPSED % 60 ))s" >&2

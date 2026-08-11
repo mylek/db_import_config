@@ -5,6 +5,7 @@
     "bin/magento s:up",
     "bin/magento s:di:compile",
     "bin/magento s:st:d pl_PL en_US -f",
+    "bin/magento index:reindex",
     "bin/magento admin:user:create --admin-user='admin' --admin-password='Admin123$' --admin-email='admin@example.com' --admin-firstname='admin' --admin-lastname='admin'"
   ],
 

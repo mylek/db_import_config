@@ -38,11 +38,8 @@ fi
 CONFIG_KEY="$1"
 DATABASE_OVERRIDE="${2:-}"
 
-if [[ ! -f "$SQL_FILE" ]]; then
-    echo "BŁĄD: Nie znaleziono pliku ${SQL_FILE}" >&2
-    echo "Najpierw uruchom: ./generate_sql.sh ${CONFIG_KEY}" >&2
-    exit 1
-fi
+echo "Generuję SQL dla: ${CONFIG_KEY}" >&2
+"${SCRIPT_DIR}/generate_sql.sh" "${CONFIG_KEY}"
 
 if ! command -v warden &>/dev/null; then
     echo "BŁĄD: Komenda 'warden' nie jest dostępna." >&2

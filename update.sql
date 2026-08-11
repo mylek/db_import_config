@@ -14,3 +14,5 @@ UPDATE core_config_data SET value = 'https://nginx.helikon-tex.orb.local/en/' WH
 UPDATE core_config_data SET value = 'https://nginx.helikon-tex.orb.local/pl/' WHERE path in ('web/unsecure/base_url', 'web/secure/base_url', 'web/unsecure/base_link_url', 'web/secure/base_link_url') AND scope_id = 3;
 UPDATE core_config_data SET value = 'https://nginx.helikon-tex.orb.local/static/' WHERE path in ('web/unsecure/base_static_url', 'web/secure/base_static_url');
 UPDATE core_config_data SET value = 'https://nginx.helikon-tex.orb.local/media/' WHERE path in ('web/unsecure/base_media_url', 'web/secure/base_media_url');
+UPDATE core_config_data SET value = 'test' WHERE path in ('payment/mollie_general/type');
+UPDATE core_config_data SET value = '0:3:GQLvXHJnJRnHQGnWgEKZ/01J8cK4pVaMh5Ewmq7QRShbUs/5bew5izoWIqOffIKUhSiTBfu9LLLWP0tnNgZf' WHERE path in ('payment/mollie_general/apikey_test');

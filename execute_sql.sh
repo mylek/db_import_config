@@ -95,5 +95,33 @@ cat "${SQL_FILE}" >> "${TMP_SQL}"
 cd "$WARDEN_DIR"
 warden env exec -T -- db bash -c "mysql -uroot -p\${MYSQL_ROOT_PASSWORD} ${DATABASE}" < "${TMP_SQL}"
 
+# Odczytaj komendy do wykonania (_commands z top-level + z wybranego środowiska)
+COMMANDS=$(python3 - "$CONFIG_KEY" "$CONFIG_FILE" << 'PYEOF'
+import json, sys
+
+config_key  = sys.argv[1]
+config_file = sys.argv[2]
+
+with open(config_file) as f:
+    all_configs = json.load(f)
+
+shared_cmds = all_configs.get("_commands", [])
+env_cfg     = all_configs.get(config_key, {})
+env_cmds    = env_cfg.get("_commands", []) if isinstance(env_cfg, dict) else []
+
+for cmd in shared_cmds + env_cmds:
+    print(cmd)
+PYEOF
+)
+
+if [[ -n "$COMMANDS" ]]; then
+    echo "" >&2
+    echo "Wykonuję komendy:" >&2
+    while IFS= read -r cmd; do
+        echo "  \$ ${cmd}" >&2
+        warden env exec -T -- php-fpm bash -c "cd /var/www/html && ${cmd}" < /dev/null
+    done <<< "$COMMANDS"
+fi
+
 echo "" >&2
 echo "✓ Gotowe." >&2

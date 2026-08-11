@@ -1,4 +1,10 @@
 {
+  "_commands": [
+    "bin/magento module:d Magento_TwoFactorAuth",
+    "bin/magento s:up && bin/magento s:st:d pl_PL -f",
+    "bin/magento admin:user:create --admin-user='admin' --admin-password='Admin123$' --admin-email='admin@example.com' --admin-firstname='admin' --admin-lastname='admin'"
+  ],
+
   "_shared": [
     { "path": "erpconnector/general/api_url", "value": "http://10.100.48.25:44380" },
     { "path": "pimconnector/general/api_key", "value": "de0b31477281cd177e5a6a55a3c18c4a" },
@@ -14,7 +20,11 @@
 
   "nginx_htx": {
     "_warden_dir": "/Users/k.gwozdziowski/www/helikon-tex",
-    "_web_urls": { "base": "https://nginx.helikon-tex.orb.local/" }
+    "_web_urls": { "base": "https://nginx.helikon-tex.orb.local/" },
+    "entries": [
+      { "path": "payment/mollie_general/type", "value": "test" },
+      { "path": "payment/mollie_general/apikey_test", "value": "0:3:GQLvXHJnJRnHQGnWgEKZ/01J8cK4pVaMh5Ewmq7QRShbUs/5bew5izoWIqOffIKUhSiTBfu9LLLWP0tnNgZf" }
+    ]
   },
 
   "local_htx": {

@@ -31,9 +31,12 @@
 # Wpisy w "_shared" i "entries" mogą pominąć pole "scope" — brak pola oznacza
 # UPDATE bez filtrowania po scope_id (odpowiednik scope = 'default' w Magento).
 #
+# Wywołanie bez parametru uruchamia tryb interaktywny — skrypt wyświetli
+# listę dostępnych konfiguracji i poprosi o wybór.
+#
 # Użycie:
+#   ./generate_sql.sh          <- tryb interaktywny
 #   ./generate_sql.sh <config_key>
-#   ./generate_sql.sh nginx_htx
 #
 # Wymagania: python3
 # =============================================================================
@@ -48,19 +51,23 @@ if [[ ! -f "$CONFIG_FILE" ]]; then
     exit 1
 fi
 
-if [[ $# -ne 1 ]]; then
-    echo "Użycie: $(basename "$0") <config_key>" >&2
-    echo "" >&2
-    echo "Dostępne konfiguracje:" >&2
-    python3 -c "
-import json, sys
+if [[ $# -lt 1 ]]; then
+    CONFIGS=$(python3 -c "
+import json
 with open('${CONFIG_FILE}') as f:
     cfg = json.load(f)
 for key in cfg:
     if not key.startswith('_'):
-        print(f'  - {key}')
-" >&2
-    exit 1
+        print(key)
+")
+
+    echo "Wybierz konfigurację:" >&2
+    select CONFIG_KEY in $CONFIGS; do
+        [[ -n "$CONFIG_KEY" ]] && break
+        echo "Nieprawidłowy wybór, spróbuj ponownie." >&2
+    done
+else
+    CONFIG_KEY="$1"
 fi
 
 # Kopiuj wynik do schowka (pbcopy na macOS, xclip/xsel na Linux)
@@ -74,7 +81,7 @@ else
     CLIPBOARD_CMD=""
 fi
 
-SQL_OUTPUT=$(python3 - "$1" "$CONFIG_FILE" << 'PYEOF'
+SQL_OUTPUT=$(python3 - "$CONFIG_KEY" "$CONFIG_FILE" << 'PYEOF'
 import json
 import sys
 from collections import OrderedDict

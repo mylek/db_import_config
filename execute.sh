@@ -1,17 +1,27 @@
 #!/usr/bin/env bash
 # =============================================================================
-# execute_sql.sh
+# execute.sh
 #
-# Wykonuje plik update.sql na bazie danych przez warden env exec.
-# Katalog projektu warden oraz nazwa bazy są odczytywane z config.json
-# na podstawie klucza środowiska (_warden_dir wymagany, _db opcjonalny).
+# Kompleksowy skrypt wdrożenia środowiska Magento przez Warden:
+#   1. Generuje update.sql z config.json (wywołuje generate_sql.sh)
+#   2. Jeśli podano nazwę bazy — aktualizuje dbname w app/etc/env.php
+#   3. Wykonuje update.sql na bazie danych przez warden env exec db
+#   4. Wykonuje komendy zdefiniowane w _commands (config.json) przez php-fpm
+#
+# Wywołanie bez parametrów uruchamia tryb interaktywny — skrypt poprosi
+# o wybór konfiguracji z listy i opcjonalnie o nazwę bazy danych.
 #
 # Użycie:
-#   ./execute_sql.sh <config_key> [database]
-#   ./execute_sql.sh htx             <- baza z config lub domyślnie "magento"
-#   ./execute_sql.sh htx magento2    <- nadpisuje nazwę bazy
+#   ./execute.sh                     <- tryb interaktywny
+#   ./execute.sh <config_key>        <- baza z config lub domyślnie "magento"
+#   ./execute.sh <config_key> <db>   <- nadpisuje nazwę bazy (aktualizuje env.php)
 #
-# Wymagania: warden, działające środowisko warden (warden env up)
+# Klucze config.json:
+#   _warden_dir  — ścieżka do katalogu projektu Warden (wymagany)
+#   _db          — nazwa bazy danych (opcjonalny, domyślnie "magento")
+#   _commands    — lista komend wykonywanych po SQL przez php-fpm (opcjonalny)
+#
+# Wymagania: python3, warden (warden env up przed uruchomieniem)
 # =============================================================================
 
 set -euo pipefail

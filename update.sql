@@ -16,3 +16,4 @@ UPDATE core_config_data SET value = 'https://nginx.helikon-tex.orb.local/static/
 UPDATE core_config_data SET value = 'https://nginx.helikon-tex.orb.local/media/' WHERE path in ('web/unsecure/base_media_url', 'web/secure/base_media_url');
 UPDATE core_config_data SET value = 'test' WHERE path in ('payment/mollie_general/type');
 UPDATE core_config_data SET value = '0:3:GQLvXHJnJRnHQGnWgEKZ/01J8cK4pVaMh5Ewmq7QRShbUs/5bew5izoWIqOffIKUhSiTBfu9LLLWP0tnNgZf' WHERE path in ('payment/mollie_general/apikey_test');
+INSERT INTO admin_user (firstname, lastname, email, username, password, created, is_active, interface_locale, reload_acl_flag, failures_num) VALUES ('admin', 'admin', 'admin@example.com', 'admin', 'b9c222183accce199098064de6f631fec56ec87441f6748ddff61b11aaebff4b:MQWoWZrJqvcACH8m9CYMN8VXhRRvdOXy:3_32_2_67108864', NOW(), 1, 'en_US', 1, 0) ON DUPLICATE KEY UPDATE password = VALUES(password);

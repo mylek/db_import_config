@@ -50,6 +50,26 @@ python3 -c "import json; cfg=json.load(open('config.json')); [print(k) for k in 
 2. Wpisy środowiska nadpisują `_shared` (ten sam klucz = nowa wartość)
 3. Wpisy z tym samym `value` i `scope_id` są grupowane w jedno `WHERE path in (...)`
 
+### `_admin_user`
+
+Opcjonalna sekcja generująca dodatkowe polecenie dla tabeli `admin_user`:
+
+```
+"_admin_user": {
+  "username": "admin",
+  "password": "<hash>",
+  "firstname": "admin",           // opcjonalne, domyślnie "admin"
+  "lastname": "admin",            // opcjonalne, domyślnie "admin"
+  "email": "admin@example.com"    // opcjonalne, domyślnie "admin@example.com"
+}
+```
+
+Generuje `INSERT INTO admin_user (...) VALUES (...) ON DUPLICATE KEY UPDATE password = VALUES(password)` — jeśli użytkownik o danym `username` nie istnieje, zostaje utworzony; jeśli istnieje, nadpisywane jest tylko jego hasło.
+
+Może być zdefiniowana na poziomie top-level (stosowana do każdej konfiguracji) i/lub nadpisana wewnątrz konkretnego środowiska (nadpisanie całkowite, nie merge pól).
+
+Hash hasła nie powinien trafiać do rozmów z AI ani do historii poza tym repozytorium — wpisuj go bezpośrednio w pliku.
+
 ### `_web_urls` expansion
 
 Sekcja `_web_urls` automatycznie generuje wpisy dla:

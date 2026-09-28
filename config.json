@@ -1,12 +1,15 @@
 {
+  "_admin_user": {
+    "username": "admin",
+    "password": "b9c222183accce199098064de6f631fec56ec87441f6748ddff61b11aaebff4b:MQWoWZrJqvcACH8m9CYMN8VXhRRvdOXy:3_32_2_67108864"
+  },
+
   "_commands": [
     "composer install",
     "bin/magento module:d Magento_TwoFactorAuth",
     "bin/magento s:up",
     "bin/magento s:di:compile",
-    "bin/magento s:st:d pl_PL en_US -f",
-    "bin/magento index:reindex",
-    "bin/magento admin:user:create --admin-user='admin' --admin-password='Admin123$' --admin-email='admin@example.com' --admin-firstname='admin' --admin-lastname='admin'"
+    "bin/magento s:st:d pl_PL en_US -f"
   ],
 
   "_shared": [
@@ -31,12 +34,24 @@
     ]
   },
 
+  "htx_ngrok": {
+    "_warden_dir": "/Users/k.gwozdziowski/www/helikon-tex",
+    "_web_urls": { "base": "https://superheroic-inocencia-dimensionally.ngrok-free.dev/" },
+    "entries": [
+      { "path": "payment/mollie_general/type", "value": "test" },
+      { "path": "payment/mollie_general/apikey_test", "value": "0:3:GQLvXHJnJRnHQGnWgEKZ/01J8cK4pVaMh5Ewmq7QRShbUs/5bew5izoWIqOffIKUhSiTBfu9LLLWP0tnNgZf" }
+    ]
+  },
+
   "da": {
     "_warden_dir": "/Users/k.gwozdziowski/www/direct-action",
     "_web_urls": { "base": "https://nginx.directaction.orb.local/" },
+    "_admin_user": { "username": "admin", "password": "203de440fc0b935789094f8b685650eac66ad6ee58f0642c71d1ed8bd4980bbe:xLgZ1nlUJySfyHigtQcerFBoGaWY4hLU:3_32_2_67108864" },
     "entries": [
       { "path": "erpconnector/general/api_url", "value": "http://10.100.48.25:44351" },
-      { "path": "pimconnector/general/api_key", "value": "d2da4d3f513238290b8890a1ec1999c7" }
+      { "path": "pimconnector/general/api_key", "value": "d2da4d3f513238290b8890a1ec1999c7" },
+      { "path": "payment/mollie_general/type", "value": "test" },
+      { "path": "payment/mollie_general/apikey_test", "value": "0:3:GQLvXHJnJRnHQGnWgEKZ/01J8cK4pVaMh5Ewmq7QRShbUs/5bew5izoWIqOffIKUhSiTBfu9LLLWP0tnNgZf" }
     ]
   },
 

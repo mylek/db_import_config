@@ -169,6 +169,30 @@ for (scope, value), paths in groups.items():
         stmt += f" AND scope_id = {scope}"
     stmt += ";"
     print(stmt)
+
+# _admin_user: top-level (globalny) nadpisywany przez _admin_user środowiska
+admin_cfg = all_configs.get("_admin_user")
+env_cfg = all_configs[config_key]
+if isinstance(env_cfg, dict) and "_admin_user" in env_cfg:
+    admin_cfg = env_cfg["_admin_user"]
+
+if admin_cfg:
+    def esc(v):
+        return str(v).replace("'", "''")
+
+    username  = esc(admin_cfg["username"])
+    password  = esc(admin_cfg["password"])
+    firstname = esc(admin_cfg.get("firstname", "admin"))
+    lastname  = esc(admin_cfg.get("lastname", "admin"))
+    email     = esc(admin_cfg.get("email", "admin@example.com"))
+
+    # INSERT gdy brak wpisu (po username), UPDATE hasła gdy wpis już istnieje.
+    print(
+        "INSERT INTO admin_user "
+        "(firstname, lastname, email, username, password, created, is_active, interface_locale, reload_acl_flag, failures_num) "
+        f"VALUES ('{firstname}', '{lastname}', '{email}', '{username}', '{password}', NOW(), 1, 'en_US', 1, 0) "
+        "ON DUPLICATE KEY UPDATE password = VALUES(password);"
+    )
 PYEOF
 )
 

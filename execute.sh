@@ -148,11 +148,29 @@ PYEOF
 
 if [[ -n "$COMMANDS" ]]; then
     echo "" >&2
+    read -rp "Wykonać serię komend (_commands)? [T/n]: " RUN_COMMANDS
+    RUN_COMMANDS="${RUN_COMMANDS:-T}"
+    if [[ ! "$RUN_COMMANDS" =~ ^[TtYy] ]]; then
+        echo "  (pominięto całą serię komend)" >&2
+        COMMANDS=""
+    fi
+fi
+
+if [[ -n "$COMMANDS" ]]; then
+    echo "" >&2
     echo "Wykonuję komendy:" >&2
-    while IFS= read -r cmd; do
+    while IFS= read -r cmd <&3; do
+        if [[ "$cmd" == *"reindex"* ]]; then
+            read -rp "Uruchomić '${cmd}'? [T/n]: " RUN_REINDEX
+            RUN_REINDEX="${RUN_REINDEX:-T}"
+            if [[ ! "$RUN_REINDEX" =~ ^[TtYy] ]]; then
+                echo "  (pominięto: ${cmd})" >&2
+                continue
+            fi
+        fi
         echo "  \$ ${cmd}" >&2
         warden env exec -T -- php-fpm bash -c "cd /var/www/html && ${cmd}" < /dev/null
-    done <<< "$COMMANDS"
+    done 3<<< "$COMMANDS"
 fi
 
 ELAPSED=$(( $(date +%s) - START_TIME ))

@@ -81,6 +81,12 @@ Domyślne mapowanie scope_id → sufiks URL: `{0,2}→""`, `{1}→"en/"`, `{3}�
 
 Wpisy bez pola `scope` generują UPDATE bez filtrowania `AND scope_id = X`.
 
+### `_commands`
+
+Lista komend wykonywanych przez `execute.sh` po SQL, wewnątrz kontenera `php-fpm`. Może być zdefiniowana top-level (`_commands`, wspólne dla wszystkich środowisk) i/lub wewnątrz konkretnego środowiska (dodawane po wspólnych).
+
+Przed wykonaniem całej serii `execute.sh` pyta `Wykonać serię komend (_commands)? [T/n]` — odpowiedź przecząca pomija wszystkie komendy. Dodatkowo każda pojedyncza komenda zawierająca w nazwie `reindex` (np. `bin/magento index:reindex`) jest osobno potwierdzana pytaniem `Uruchomić '...'? [T/n]`. W obu przypadkach Enter/`T` = tak, `n` = pomiń.
+
 ## Requirements
 
 - `python3`

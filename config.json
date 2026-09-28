@@ -9,7 +9,8 @@
     "bin/magento module:d Magento_TwoFactorAuth",
     "bin/magento s:up",
     "bin/magento s:di:compile",
-    "bin/magento s:st:d pl_PL en_US -f"
+    "bin/magento s:st:d pl_PL en_US -f",
+    "bin/magento index:reindex"
   ],
 
   "_shared": [
